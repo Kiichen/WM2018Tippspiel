@@ -75,6 +75,8 @@
                     $_SESSION['SpieleID' . $i] = $spieleID;
 
                     $schongetippt = "SELECT * FROM tipps WHERE benutzerid = '$userID' AND spieleid = '$spieleID'";
+                    $result2 = mysqli_query($conn, $schongetippt);
+
 
                     $spielbezeichnung = $row['Gruppe'];
                     $spielort = UTF8_encode($row['Spielort']);
@@ -84,9 +86,17 @@
                     $datumuhrzeit = date_create($datumuhrzeit);
                     $datum = date_format($datumuhrzeit, "d.m.y");
                     $uhrzeit = date_format($datumuhrzeit, "H:i:s");
+
                     echo "<tr><td>$spieleID</td><td>$spielbezeichnung</td><td>$spielort</td><td>$datum</td><td>$uhrzeit</td><td>$heimmannschaft</td><td>$gastmannschaft</td>
-                            <td><input type='number' name='hmhz" . $i . "'></td><td><input type='number' name='gmhz" . $i . "'></td><td><input type='number' name='hme" . $i . "'></td><td><input type='number' name='gme" . $i . "'></td>
-                            <td><input type='number' name='hmg" . $i . "'></td><td><input type='number' name='gmg" . $i . "'></td><td><input type='number' name='hmr" . $i . "'></td><td><input type='number' name='gmr" . $i . "'></td>
+                            
+                            <td><input type='number' name='hmhz" . $i . "'value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippheimhz'];} echo"'></td>
+                            <td><input type='number' name='gmhz" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippgasthz'];} echo"'></td>
+                            <td><input type='number' name='hme" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippheimende'];} echo"'></td>
+                            <td><input type='number' name='gme" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippgastende'];} echo"'></td>
+                            <td><input type='number' name='hmg" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippgelbeheim'];} echo"'></td>
+                            <td><input type='number' name='gmg" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippgelbegast'];} echo"'></td>
+                            <td><input type='number' name='hmr" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tipproteheim'];} echo"'></td>
+                            <td><input type='number' name='gmr" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tipprotegast'];} echo"'></td>
                             </tr>";
                     $i++;
 
