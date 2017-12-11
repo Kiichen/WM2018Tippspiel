@@ -57,7 +57,6 @@
             </tr>
             <?php
 
-
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $gruppe = $_POST['Spiel'];
                 $_SESSION['gruppe'] = $gruppe;
@@ -76,7 +75,7 @@
 
                     $schongetippt = "SELECT * FROM tipps WHERE benutzerid = '$userID' AND spieleid = '$spieleID'";
                     $result2 = mysqli_query($conn, $schongetippt);
-
+                    $row2=mysqli_fetch_assoc($result2);
 
                     $spielbezeichnung = $row['Gruppe'];
                     $spielort = UTF8_encode($row['Spielort']);
@@ -87,23 +86,21 @@
                     $datum = date_format($datumuhrzeit, "d.m.y");
                     $uhrzeit = date_format($datumuhrzeit, "H:i:s");
 
-                    echo "<tr><td>$spieleID</td><td>$spielbezeichnung</td><td>$spielort</td><td>$datum</td><td>$uhrzeit</td><td>$heimmannschaft</td><td>$gastmannschaft</td>
-                            
-                            <td><input type='number' name='hmhz" . $i . "'value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippheimhz'];} echo"'></td>
-                            <td><input type='number' name='gmhz" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippgasthz'];} echo"'></td>
-                            <td><input type='number' name='hme" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippheimende'];} echo"'></td>
-                            <td><input type='number' name='gme" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippgastende'];} echo"'></td>
-                            <td><input type='number' name='hmg" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippgelbeheim'];} echo"'></td>
-                            <td><input type='number' name='gmg" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tippgelbegast'];} echo"'></td>
-                            <td><input type='number' name='hmr" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tipproteheim'];} echo"'></td>
-                            <td><input type='number' name='gmr" . $i . "' value='";if(mysqli_num_rows($result2) > 0){echo mysqli_fetch_assoc($result2)['tipprotegast'];} echo"'></td>
+                    echo "<tr><td>$spieleID</td><td>$spielbezeichnung</td><td>$spielort</td><td>$datum</td><td>$uhrzeit</td><td>$heimmannschaft</td><td>$gastmannschaft</td>                         
+                            <td><input type='number' name='hmhz" . $i . "' value='".$row2['tippheimhz']."'></td>
+                            <td><input type='number' name='gmhz" . $i . "' value='".$row2['tippgasthz']."'></td>
+                            <td><input type='number' name='hme" . $i . "'  value='".($row2)['tippheimende']."'></td>
+                            <td><input type='number' name='gme" . $i . "'  value='".($row2)['tippgastende']."'></td>
+                            <td><input type='number' name='hmg" . $i . "'  value='".($row2)['tippgelbeheim']."'></td>
+                            <td><input type='number' name='gmg" . $i . "'  value='".($row2)['tippgelbegast']."'></td>
+                            <td><input type='number' name='hmr" . $i . "'  value='".($row2)['tipproteheim']."'></td>
+                            <td><input type='number' name='gmr" . $i . "'  value='".($row2)['tipprotegast']."'></td>
                             </tr>";
                     $i++;
 
                 }
             }
-
-
+            
             ?>
             <tr><td colspan="14"><input type="submit" value="Tipp abgeben"></td></tr>
         </table>
