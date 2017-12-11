@@ -41,7 +41,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
         }
         else
         {
-            $sql = "UPDATE tipps SET tippdatum = '$tippdatum', tippheimhz = '$hmhz', tippgasthz='$gmhz', tippheimende='$hme', tippgastende='$gme', tippgelbeheim='$hmg', tippgelbegast='$gmg', tipproteheim='$hmr', tipprotegast='$gmr'";
+            $sql = "UPDATE tipps SET tippdatum = '$tippdatum', tippheimhz = '$hmhz', tippgasthz='$gmhz', tippheimende='$hme', tippgastende='$gme', tippgelbeheim='$hmg', tippgelbegast='$gmg', tipproteheim='$hmr', tipprotegast='$gmr'
+                    WHERE benutzerid='$userID' AND spieleid='$spieleID'";
 
             if (mysqli_query($conn, $sql))
             {
@@ -57,6 +58,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     }
 
     mysqli_close($conn);
-    /*header('Location: tippen.php');*/
+    header('Location: tippen.php');
 }
 ?>
