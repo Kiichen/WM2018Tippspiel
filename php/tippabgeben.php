@@ -24,9 +24,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
         $hmr = $_POST['hmr'.$i];
         $gmr = $_POST['gmr'.$i];
 
+        $tippdatum = date("Y-m-d H:i:sa");
 
-        $sql = "INSERT INTO tipps (benutzerid, spieleid, tippheimhz, tippgasthz, tippheimende, tippgastende, tippgelbeheim, tippgelbegast, tipproteheim, tipprotegast) 
-            VALUES ('$userID', '$spieleID', '$hmhz', '$gmhz', '$hme', '$gme', '$hmg', '$gmg', '$hmr', '$gmr')";
+        $sql = "INSERT INTO tipps (benutzerid, spieleid, tippdatum, tippheimhz, tippgasthz, tippheimende, tippgastende, tippgelbeheim, tippgelbegast, tipproteheim, tipprotegast) 
+            VALUES ('$userID', '$spieleID', '$tippdatum', '$hmhz', '$gmhz', '$hme', '$gme', '$hmg', '$gmg', '$hmr', '$gmr')";
         if(mysqli_query($conn, $sql))
         {
             echo "<p style='background: green; color: lightgray; width: 270px; padding: 5px;'>Der Tipp wurde gespeichert!</p>";
@@ -40,8 +41,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 
     }
 
-
-
     mysqli_close($conn);
+    /*header('Location: tippen.php');*/
 }
 ?>
