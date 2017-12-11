@@ -15,6 +15,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
         $spieleID = $_SESSION['SpieleID'.$i];
         $userID = $_SESSION['ID'];
 
+        $schongetippt = "SELECT * FROM tipps WHERE benutzerid = '$userID' AND spieleid = '$spieleID'";
+        $result2 = mysqli_query($conn, $schongetippt);
+
         $hmhz = $_POST['hmhz'.$i];
         $gmhz = $_POST['gmhz'.$i];
         $hme = $_POST['hme'.$i];
@@ -26,22 +29,34 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 
         $tippdatum = date("Y-m-d H:i:sa");
 
-        $sql = "INSERT INTO tipps (benutzerid, spieleid, tippdatum, tippheimhz, tippgasthz, tippheimende, tippgastende, tippgelbeheim, tippgelbegast, tipproteheim, tipprotegast) 
-            VALUES ('$userID', '$spieleID', '$tippdatum', '$hmhz', '$gmhz', '$hme', '$gme', '$hmg', '$gmg', '$hmr', '$gmr')";
-        if(mysqli_query($conn, $sql))
+        if(mysqli_num_rows($result2)<=0)
         {
-            echo "<p style='background: green; color: lightgray; width: 270px; padding: 5px;'>Der Tipp wurde gespeichert!</p>";
+            $sql = "INSERT INTO tipps (benutzerid, spieleid, tippdatum, tippheimhz, tippgasthz, tippheimende, tippgastende, tippgelbeheim, tippgelbegast, tipproteheim, tipprotegast) 
+            VALUES ('$userID', '$spieleID', '$tippdatum', '$hmhz', '$gmhz', '$hme', '$gme', '$hmg', '$gmg', '$hmr', '$gmr')";
+            if (mysqli_query($conn, $sql)) {
+                echo "<p style='background: green; color: lightgray; width: 270px; padding: 5px;'>Der Tipp wurde gespeichert!</p>";
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
         }
         else
         {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }
+            $sql = "UPDATE tipps SET tippdatum = '$tippdatum', tippheimhz = '$hmhz', tippgasthz='$gmhz', tippheimende='$hme', tippgastende='$gme', tippgelbeheim='$hmg', tippgelbegast='$gmg', tipproteheim='$hmr', tipprotegast='$gmr'";
 
+            if (mysqli_query($conn, $sql))
+            {
+                echo "Record updated successfully";
+            }
+            else
+            {
+                echo "Error updating record: " . mysqli_error($conn);
+            }
+        }
         $i++;
 
     }
 
     mysqli_close($conn);
-    header('Location: tippen.php');
+    /*header('Location: tippen.php');*/
 }
 ?>
