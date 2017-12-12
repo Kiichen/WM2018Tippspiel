@@ -70,7 +70,8 @@
         </select>
         <input type="submit" value="Anzeigen">
     </form>
-    <form method="post" action="tippabgeben.php">
+
+    <form name = "gruppeabgeben" method="post" action="tippabgeben.php">
         <table>
             <tr>
                 <td>Spiele-ID</td>
@@ -93,6 +94,7 @@
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST')
             {
+                $_SESSION['sortierart']= 'gruppe';
                 $gruppe = $_POST['Spiel'];
                 $_SESSION['gruppe'] = $gruppe;
 
@@ -147,7 +149,7 @@
         {
             require ("db_verbindung.php");
         ?>
-    <form method="post" action="tippabgeben.php">
+    <form name="abgebendatum" method="post" action="tippabgeben.php">
         <table>
             <tr>
                 <td>Spiele-ID</td>
@@ -167,6 +169,8 @@
                 <td>Gastmannschaft Rot</td>
             </tr>
             <?php
+
+                $_SESSION['sortierart']= 'datum';
 
                 $sql = "SELECT * FROM spielplan ORDER BY Datum";
                 $result = mysqli_query($conn, $sql);
